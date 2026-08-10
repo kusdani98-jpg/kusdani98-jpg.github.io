@@ -1,415 +1,1086 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dani Indra Kusuma - Portfolio Profesional</title>
-    <style>
-        :root {
-            --primary: #1a365d;
-            --secondary: #2b6cb0;
-            --accent: #3182ce;
-            --dark: #2d3748;
-            --light: #f7fafc;
-            --border: #e2e8f0;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portofolio Futuristis - Dani Indra Kusuma</title>
+  
+  <!-- LIBRARY EXTERNAL: TYPED.JS & VANILLA-TILT -->
+  <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js" defer></script>
+  
+  <style>
+    /* -----------------------------------------------------------
+       1. VARIABEL WARNA NEON & GLASSMORPHISM
+       ----------------------------------------------------------- */
+    :root {
+      --bg-color: #030712;
+      --card-bg: rgba(17, 24, 39, 0.65);
+      --card-border: rgba(56, 189, 248, 0.15);
+      --text-main: #f9fafb;
+      --text-sub: #9ca3af;
+      --primary: #38bdf8;
+      --secondary: #a855f7;
+      --accent: #25D366;
+      --glow-primary: rgba(56, 189, 248, 0.4);
+      --glow-secondary: rgba(168, 85, 247, 0.4);
+      --shadow: rgba(0, 0, 0, 0.6);
+      --nav-bg: rgba(3, 7, 18, 0.75);
+    }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+    [data-theme="light"] {
+      --bg-color: #f8fafc;
+      --card-bg: rgba(255, 255, 255, 0.75);
+      --card-border: rgba(2, 132, 199, 0.15);
+      --text-main: #0f172a;
+      --text-sub: #475569;
+      --primary: #0284c7;
+      --secondary: #7c3aed;
+      --accent: #128C7E;
+      --glow-primary: rgba(2, 132, 199, 0.25);
+      --glow-secondary: rgba(124, 58, 237, 0.25);
+      --shadow: rgba(148, 163, 184, 0.25);
+      --nav-bg: rgba(248, 250, 252, 0.75);
+    }
 
-        body {
-            color: var(--dark);
-            background-color: #ffffff;
-            line-height: 1.6;
-        }
+    /* 2. RESET & CANVAS BACKGROUND */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    }
 
-        /* Navigation Bar */
-        nav {
-            background-color: var(--primary);
-            color: white;
-            padding: 20px 10%;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
+    html {
+      scroll-behavior: smooth;
+    }
 
-        nav .logo {
-            font-size: 1.4rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.6;
+      overflow-x: clip;
+      position: relative;
+    }
 
-        nav ul {
-            display: flex;
-            list-style: none;
-        }
+    #particles-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
 
-        nav ul li {
-            margin-left: 25px;
-        }
+    /* ANIMASI REVEAL ON SCROLL */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
 
-        nav ul li a {
-            color: #e2e8f0;
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-        nav ul li a:hover {
-            color: #90cdf4;
-        }
+    /* 3. NAVBAR STICKY GLASS */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: var(--nav-bg);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--card-border);
+      z-index: 100;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-        /* Hero Header Section */
-        .hero {
-            background: linear-gradient(135deg, #1a365d 0%, #2a4365 100%);
-            color: white;
-            padding: 100px 10%;
-            text-align: center;
-        }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-decoration: none;
+    }
 
-        .hero h1 {
-            font-size: 2.8rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            letter-spacing: -0.5px;
-        }
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 1.8rem;
+    }
 
-        .hero .subtitle {
-            font-size: 1.3rem;
-            color: #90cdf4;
-            margin-bottom: 25px;
-            font-weight: 400;
-        }
+    nav a {
+      color: var(--text-sub);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+    }
 
-        .hero p {
-            max-width: 700px;
-            margin: 0 auto 35px auto;
-            color: #e2e8f0;
-            font-size: 1.05rem;
-        }
+    nav a:hover {
+      color: var(--primary);
+      text-shadow: 0 0 10px var(--glow-primary);
+    }
 
-        .btn-cta {
-            background-color: #3182ce;
-            color: white;
-            padding: 12px 30px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: 600;
-            display: inline-block;
-            transition: background-color 0.3s, transform 0.2s;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
+    #theme-toggle {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 12px var(--shadow);
+    }
 
-        .btn-cta:hover {
-            background-color: #2b6cb0;
-            transform: translateY(-2px);
-        }
+    /* 4. HERO SECTION WITH GLOW AVATAR */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 7rem 2rem 3rem 2rem;
+      position: relative;
+    }
 
-        /* Layout Container */
-        .container {
-            padding: 70px 10%;
-        }
+    .profile-container {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
 
-        section h2 {
-            font-size: 1.8rem;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 30px;
-            position: relative;
-            padding-bottom: 10px;
-        }
+    .profile-container::before {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      filter: blur(15px);
+      opacity: 0.8;
+      animation: pulse 3s infinite alternate;
+    }
 
-        section h2::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 50px;
-            height: 4px;
-            background-color: var(--secondary);
-            border-radius: 2px;
-        }
+    @keyframes pulse {
+      0% { opacity: 0.5; transform: scale(0.98); }
+      100% { opacity: 0.9; transform: scale(1.05); }
+    }
 
-        /* Responsive Grid untuk About & Skills */
-        .grid-two {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 40px;
-        }
+    .profile-img {
+      position: relative;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: var(--bg-color);
+      padding: 4px;
+      border: 2px solid var(--primary);
+    }
 
-        @media (min-width: 768px) {
-            .grid-two {
-                grid-template-columns: 1.2fr 0.8fr;
-            }
-        }
+    .profile-img img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    }
 
-        /* Tabel Keahlian Teknis */
-        .skills-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-            background-color: var(--light);
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid var(--border);
-        }
+    .hero h1 {
+      font-size: 3.2rem;
+      margin-bottom: 0.5rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
 
-        .skills-table td {
-            padding: 12px 15px;
-            border-bottom: 1px solid var(--border);
-            font-size: 0.95rem;
-        }
+    .hero .subtitle {
+      font-size: 1.5rem;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      min-height: 2.2rem;
+      font-weight: 600;
+    }
 
-        .skills-table tr:last-child td {
-            border-bottom: none;
-        }
+    .hero p {
+      max-width: 650px;
+      color: var(--text-sub);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
 
-        .skills-table td.category {
-            font-weight: 700;
-            color: var(--secondary);
-            background-color: #edf2f7;
-            width: 30%;
-        }
+    .btn-group {
+      display: flex;
+      gap: 1.2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
 
-        /* Grid untuk Kartu Proyek */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 25px;
-        }
+    .btn {
+      padding: 0.85rem 2rem;
+      border-radius: 14px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-        @media (min-width: 768px) {
-            .projects-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #fff;
+      border: none;
+      box-shadow: 0 4px 20px var(--glow-primary);
+    }
 
-        .project-card {
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 25px;
-            transition: transform 0.3s, box-shadow 0.3s;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
+    .btn-primary:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 10px 30px var(--glow-secondary);
+    }
 
-        .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-        }
+    .btn-outline {
+      background: var(--card-bg);
+      color: var(--text-main);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(10px);
+    }
 
-        .project-tag {
-            display: inline-block;
-            background-color: #ebf8ff;
-            color: var(--secondary);
-            font-size: 0.75rem;
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-weight: 600;
-            text-transform: uppercase;
-            margin-bottom: 12px;
-            align-self: flex-start;
-        }
+    .btn-outline:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 8px 20px var(--shadow);
+    }
 
-        .project-card h3 {
-            font-size: 1.2rem;
-            color: var(--primary);
-            margin-bottom: 8px;
-        }
+    .btn-whatsapp {
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      color: #fff;
+      border: none;
+      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
+    }
 
-        .project-card .company {
-            font-size: 0.85rem;
-            color: #718096;
-            margin-bottom: 15px;
-            font-style: italic;
-        }
+    .btn-whatsapp:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 10px 30px rgba(37, 211, 102, 0.5);
+    }
 
-        .project-card ul {
-            padding-left: 18px;
-            font-size: 0.9rem;
-            color: #4a5568;
-        }
+    /* 5. STATS SECTION */
+    .stats-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+      width: 100%;
+      max-width: 900px;
+    }
 
-        .project-card li {
-            margin-bottom: 8px;
-        }
+    .stat-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 1.5rem;
+      border-radius: 18px;
+      backdrop-filter: blur(12px);
+      text-align: center;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
 
-        /* Bagian Hubungi / Call to Action */
-        .contact-section {
-            background-color: var(--light);
-            text-align: center;
-            padding: 60px 10%;
-            border-top: 1px solid var(--border);
-        }
+    .stat-box:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary);
+    }
 
-        .contact-section p {
-            margin-bottom: 25px;
-            font-size: 1.1rem;
-            color: #4a5568;
-        }
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--primary);
+      display: block;
+    }
 
-        .whatsapp-btn {
-            background-color: #25D366;
-            color: white;
-            padding: 14px 35px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: 600;
-            display: inline-block;
-            font-size: 1.05rem;
-            box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
-            transition: background-color 0.3s, transform 0.2s;
-        }
+    .stat-label {
+      color: var(--text-sub);
+      font-size: 0.9rem;
+    }
 
-        .whatsapp-btn:hover {
-            background-color: #20ba5a;
-            transform: translateY(-2px);
-        }
+    /* 6. CONTAINER & TITLES */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 5rem 2rem;
+    }
 
-        footer {
-            background-color: var(--primary);
-            color: #a0aec0;
-            text-align: center;
-            padding: 20px;
-            font-size: 0.85rem;
-        }
-    </style>
+    .section-title {
+      text-align: center;
+      font-size: 2.2rem;
+      margin-bottom: 3.5rem;
+      position: relative;
+      font-weight: 800;
+    }
+
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 70px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      margin: 0.6rem auto 0 auto;
+      border-radius: 2px;
+    }
+
+    /* 7. SKILLS SECTION WITH PROGRESS BARS */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.8rem;
+    }
+
+    .skill-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 2rem;
+      border-radius: 20px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 30px var(--shadow);
+      transform-style: preserve-3d;
+      transform: perspective(1000px);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .skill-card:hover {
+      border-color: var(--primary);
+      box-shadow: 0 12px 35px var(--glow-primary);
+    }
+
+    .skill-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .skill-icon {
+      font-size: 2.2rem;
+      background: rgba(56, 189, 248, 0.1);
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      color: var(--primary);
+    }
+
+    .skill-card h3 {
+      font-size: 1.2rem;
+    }
+
+    .skill-card p {
+      color: var(--text-sub);
+      font-size: 0.9rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .progress-item {
+      margin-top: 0.8rem;
+    }
+
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      margin-bottom: 0.3rem;
+      color: var(--text-sub);
+    }
+
+    .progress-bar-bg {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      border-radius: 10px;
+      width: 0%;
+      transition: width 1.5s ease;
+    }
+
+    /* 8. CERTIFICATIONS GRID */
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .cert-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 1.8rem;
+      border-radius: 20px;
+      backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      box-shadow: 0 10px 25px var(--shadow);
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .cert-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--secondary);
+    }
+
+    .cert-badge-icon {
+      font-size: 2.5rem;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(168, 85, 247, 0.15));
+      padding: 0.8rem;
+      border-radius: 16px;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cert-info h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .cert-info p {
+      color: var(--primary);
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    /* 9. PROJECTS GRID */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 2rem;
+    }
+
+    .project-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 15px 35px var(--shadow);
+      transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--primary);
+      box-shadow: 0 20px 40px var(--glow-primary);
+    }
+
+    .project-preview {
+      width: 100%;
+      height: 190px;
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      font-size: 3.5rem;
+      position: relative;
+    }
+
+    .project-preview::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      background: linear-gradient(to top, var(--card-bg), transparent);
+    }
+
+    .project-info {
+      padding: 1.8rem;
+    }
+
+    .project-info h3 {
+      font-size: 1.35rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .project-info p {
+      color: var(--text-sub);
+      font-size: 0.95rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .tags {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      background: rgba(56, 189, 248, 0.12);
+      color: var(--primary);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      padding: 0.3rem 0.9rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    /* 10. CONTACT CARD & FOOTER */
+    .contact-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 3.5rem 2rem;
+      border-radius: 28px;
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 20px 40px var(--shadow);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2.5rem;
+      border-top: 1px solid var(--card-border);
+      color: var(--text-sub);
+      font-size: 0.9rem;
+      background: var(--nav-bg);
+    }
+
+    /* RESPONSIVE DESIGN */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.3rem; }
+      .hero .subtitle { font-size: 1.2rem; }
+      header { padding: 1rem; }
+      nav a { font-size: 0.85rem; }
+      .btn-group { flex-direction: column; width: 100%; }
+      .btn { width: 100%; justify-content: center; }
+    }
+  </style>
 </head>
 <body>
 
+  <!-- BACKGROUND PARTIKEL CANVAS -->
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- HEADER & NAVIGATION -->
+  <header>
+    <a href="#" class="logo">Dani.dev</a>
     <nav>
-        <div class="logo">DANI INDRA K.</div>
-        <ul>
-            <li><a href="#tentang">Tentang</a></li>
-            <li><a href="#keahlian">Keahlian</a></li>
-            <li><a href="#proyek">Proyek</a></li>
-            <li><a href="#kontak">Kontak</a></li>
-        </ul>
+      <a href="#about">Tentang</a>
+      <a href="#skills">Keahlian</a>
+      <a href="#certifications">Sertifikasi</a>
+      <a href="#projects">Proyek</a>
+      <a href="#contact">Kontak</a>
+      <button id="theme-toggle">
+        <span id="theme-icon">🌙</span>
+        <span id="theme-text">Dark</span>
+      </button>
     </nav>
+  </header>
 
-    <div class="hero">
-        <h1>DANI INDRA KUSUMA</h1>
-        <div class="subtitle">IT Application Engineer & Data Operations Specialist</div>
-        <p>
-            Menyediakan solusi manajemen sistem, administrasi data korporat, pengujian API, dan kustomisasi arsitektur web CMS dengan garansi akurasi tinggi dan zero human-error.
-        </p>
-        <a href="#kontak" class="btn-cta">Diskusikan Proyek Sampingan</a>
+  <!-- HERO SECTION -->
+  <section class="hero reveal" id="about">
+    <div class="profile-container">
+      <div class="profile-img">
+        <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Dani" alt="Avatar Dani">
+      </div>
+    </div>
+    <h1>Halo, Saya Dani Indra Kusuma</h1>
+    <div class="subtitle"><span id="typing-hero"></span></div>
+    <p>Data Operations Specialist & Application Engineer yang fokus pada stabilitas pipeline data enterprise, pemrosesan Graph DB, real-time monitoring, dan optimasi infrastruktur server.</p>
+    
+    <div class="btn-group">
+      <a href="#projects" class="btn btn-primary">🚀 Lihat Proyek</a>
+      <a href="#contact" class="btn btn-outline">💼 Hubungi Saya</a>
     </div>
 
-    <div class="container" id="tentang">
-        <div class="grid-two">
-            <section>
-                <h2>Tentang Saya</h2>
-                <p style="margin-bottom: 15px;">
-                    Saya adalah seorang profesional di bidang Teknologi Informasi lulusan S1 TI dengan IPK 3.78 (Cum Laude). Saat ini saya aktif berkarier di industri berskala besar (Sektor Maritim & Logistik nasional di Pelindo Group).
-                </p>
-                <p>
-                    Dengan rekam jejak menangani sistem database enterprise, pipeline big data, hingga kustomisasi web komersial, saya menawarkan jasa freelance berbasis kompetensi IT nyata. Saya berfokus pada efisiensi sistem, performa database, keamanan integrasi, serta keandalan pengelolaan data massal yang bersih dan rapi.
-                </p>
-            </section>
-            
-            <section id="keahlian">
-                <h2>Keahlian Teknis</h2>
-                <table class="skills-table">
-                    <tr>
-                        <td class="category">Database</td>
-                        <td>Oracle Database, SQL (PostgreSQL, SQL Server, Hive, Impala), GraphQL</td>
-                    </tr>
-                    <tr>
-                        <td class="category">Testing & Ops</td>
-                        <td>Postman (API Testing), Agile Scrum (Jira, Confluence), Linux (RHEL, Ubuntu)</td>
-                    </tr>
-                    <tr>
-                        <td class="category">Automation</td>
-                        <td>Python (Data Automation & Scripting), Shell Scripting, Java</td>
-                    </tr>
-                    <tr>
-                        <td class="category">Web & Data</td>
-                        <td>WordPress (Custom Theme/Plugin), Technical SEO, Advanced MS Excel / Sheets</td>
-                    </tr>
-                </table>
-            </section>
+    <!-- STATS ANIMATED COUNTER -->
+    <div class="stats-container">
+      <div class="stat-box">
+        <span class="stat-number" data-target="2">0</span>
+        <span class="stat-label">Tahun Pengalaman</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-number" data-target="5">0</span>
+        <span class="stat-label">Sertifikasi Profesional</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-number" data-target="99">0</span>
+        <span class="stat-label">% Uptime Integrity</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS SECTION -->
+  <section class="container" id="skills">
+    <h2 class="section-title reveal">Keahlian & Tools</h2>
+    <div class="skills-grid">
+      
+      <!-- Skill 1 -->
+      <div class="skill-card reveal" data-tilt="true" data-tilt-max="12" data-tilt-speed="400">
+        <div class="skill-header">
+          <div class="skill-icon">🐍</div>
+          <h3>Programming & Data</h3>
         </div>
+        <p>Pengembangan skrip otomatisasi dan query database performa tinggi.</p>
+        
+        <div class="progress-item">
+          <div class="progress-info">
+            <span>Python & SQL (Impala, Hive)</span>
+            <span>90%</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-fill" style="width: 90%;"></div>
+          </div>
+        </div>
+
+        <div class="progress-item">
+          <div class="progress-info">
+            <span>Oracle DB & PostgreSQL</span>
+            <span>85%</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-fill" style="width: 85%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skill 2 -->
+      <div class="skill-card reveal" data-tilt="true" data-tilt-max="12" data-tilt-speed="400">
+        <div class="skill-header">
+          <div class="skill-icon">🕸️</div>
+          <h3>Big Data & Graph DB</h3>
+        </div>
+        <p>Pengelolaan data terdistribusi dan Graph DB untuk analitik AML.</p>
+
+        <div class="progress-item">
+          <div class="progress-info">
+            <span>TigerGraph AML</span>
+            <span>88%</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-fill" style="width: 88%;"></div>
+          </div>
+        </div>
+
+        <div class="progress-item">
+          <div class="progress-info">
+            <span>Cloudera (CDP) & Spark</span>
+            <span>80%</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-fill" style="width: 80%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skill 3 -->
+      <div class="skill-card reveal" data-tilt="true" data-tilt-max="12" data-tilt-speed="400">
+        <div class="skill-header">
+          <div class="skill-icon">📊</div>
+          <h3>Ops & Monitoring</h3>
+        </div>
+        <p>Real-time monitoring, mitigasi insiden, dan reliabilitas server.</p>
+
+        <div class="progress-item">
+          <div class="progress-info">
+            <span>Grafana Dashboard</span>
+            <span>92%</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-fill" style="width: 92%;"></div>
+          </div>
+        </div>
+
+        <div class="progress-item">
+          <div class="progress-info">
+            <span>CyberArk & Informatica</span>
+            <span>82%</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-fill" style="width: 82%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skill 4 -->
+      <div class="skill-card reveal" data-tilt="true" data-tilt-max="12" data-tilt-speed="400">
+        <div class="skill-header">
+          <div class="skill-icon">🐧</div>
+          <h3>OS & Infrastructure</h3>
+        </div>
+        <p>Administrasi Linux, migrasi server, dan manajemen SDLC.</p>
+
+        <div class="progress-item">
+          <div class="progress-info">
+            <span>Linux (Ubuntu, RHEL)</span>
+            <span>88%</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-fill" style="width: 88%;"></div>
+          </div>
+        </div>
+
+        <div class="progress-item">
+          <div class="progress-info">
+            <span>Jira & Confluence SOP</span>
+            <span>85%</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-fill" style="width: 85%;"></div>
+          </div>
+        </div>
+      </div>
+
     </div>
+  </section>
 
-    <div class="container" style="background-color: #fafafa; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);" id="proyek">
-        <section>
-            <h2>Studi Kasus & Rekam Jejak Proyek</h2>
-            <div class="projects-grid">
-                
-                <div class="project-card">
-                    <div>
-                        <span class="project-tag">API & Database Engineering</span>
-                        <h3>API Testing & Oracle DB Optimization</h3>
-                        <div class="company">Pelindo Group (PT ILCS) | 2025 - Sekarang</div>
-                        <ul>
-                            <li>Melakukan pengujian fungsionalitas dan integrasi API sistem logistik menggunakan Postman untuk menjamin pertukaran data tanpa bug.</li>
-                            <li>Mengoptimalkan query database pada sistem Oracle DB perusahaan guna menjaga kecepatan dan integritas transaksi harian.</li>
-                        </ul>
-                    </div>
-                </div>
+  <!-- CERTIFICATIONS SECTION -->
+  <section class="container" id="certifications">
+    <h2 class="section-title reveal">Sertifikasi & Pelatihan</h2>
+    <div class="cert-grid">
+      
+      <div class="cert-card reveal" data-tilt="true" data-tilt-max="15">
+        <div class="cert-badge-icon">📜</div>
+        <div class="cert-info">
+          <h3>TigerGraph Associate Certification</h3>
+          <p>TigerGraph University</p>
+        </div>
+      </div>
 
-                <div class="project-card">
-                    <div>
-                        <span class="project-tag">Data Operations & Systems</span>
-                        <h3>Big Data Pipeline Monitoring & Server Migration</h3>
-                        <div class="company">PT Bringin Inti Teknologi (Project BRI AML) | 2024 - 2025</div>
-                        <ul>
-                            <li>Memantau stabilitas 20+ job Python otomatisasi harian di platform TigerGraph untuk keandalan sistem perbankan.</li>
-                            <li>Berkontribusi dalam migrasi database dari VM ke Baremetal server serta preventif maintenance menggunakan Grafana.</li>
-                        </ul>
-                    </div>
-                </div>
+      <div class="cert-card reveal" data-tilt="true" data-tilt-max="15">
+        <div class="cert-badge-icon">🤖</div>
+        <div class="cert-info">
+          <h3>Graph Algorithms For Machine Learning</h3>
+          <p>TigerGraph University</p>
+        </div>
+      </div>
 
-                <div class="project-card">
-                    <div>
-                        <span class="project-tag">Advanced Data Entry</span>
-                        <h3>IT Asset Validation & Inventory Management</h3>
-                        <div class="company">PT Bali TowerIndo Sentra, Tbk | 2024</div>
-                        <ul>
-                            <li>Mengelola input, rekonsiliasi, dan validasi data aset infrastruktur jaringan telekomunikasi kritis (Server, Router, Switch) di sistem ERP & Excel.</li>
-                            <li>Memastikan pencatatan laporan logistik mutasi barang 100% presisi untuk kebutuhan stock opname.</li>
-                        </ul>
-                    </div>
-                </div>
+      <div class="cert-card reveal" data-tilt="true" data-tilt-max="15">
+        <div class="cert-badge-icon">💡</div>
+        <div class="cert-info">
+          <h3>LLM-Based Tools & Gemini API Integration</h3>
+          <p>Hacktiv8 Indonesia</p>
+        </div>
+      </div>
 
-                <div class="project-card">
-                    <div>
-                        <span class="project-tag">Web Development</span>
-                        <h3>WordPress Customization & Technical SEO</h3>
-                        <div class="company">Sekolah Ekspor (MSIB Kemendikbudristek) | 2022</div>
-                        <ul>
-                            <li>Memodifikasi arsitektur kode tema dan integrasi plugin kustom berbasis CMS WordPress sesuai kebutuhan instansi.</li>
-                            <li>Mengoptimalkan indeks sitemap dan page loading speed guna menaikkan visibilitas web di Google Search.</li>
-                        </ul>
-                    </div>
-                </div>
+      <div class="cert-card reveal" data-tilt="true" data-tilt-max="15">
+        <div class="cert-badge-icon">📊</div>
+        <div class="cert-info">
+          <h3>Intro to Data Analytics</h3>
+          <p>RevoU</p>
+        </div>
+      </div>
 
-            </div>
-        </section>
+      <div class="cert-card reveal" data-tilt="true" data-tilt-max="15">
+        <div class="cert-badge-icon">🌐</div>
+        <div class="cert-info">
+          <h3>Digital Exporter Certification</h3>
+          <p>Sekolah Ekspor</p>
+        </div>
+      </div>
+
     </div>
+  </section>
 
-    <div class="contact-section" id="kontak">
-        <h2>Mulai Kerja Sama Freelance</h2>
-        <p>Mencari partner teliti untuk menginput data, menguji sistem, mengelola database, atau mengoptimalkan website WordPress Anda?</p>
-        <a href="https://wa.me/6281317692964" class="whatsapp-btn" target="_blank">Hubungi via WhatsApp (+62 813-1769-2964)</a>
+  <!-- PROJECTS SECTION -->
+  <section class="container" id="projects">
+    <h2 class="section-title reveal">Pengalaman & Proyek</h2>
+    <div class="projects-grid">
+      
+      <div class="project-card reveal" data-tilt="true" data-tilt-max="10">
+        <div class="project-preview">🔄</div>
+        <div class="project-info">
+          <h3>Server & System Migration</h3>
+          <p>Memimpin migrasi dari Virtual Machines ke Baremetal server untuk meningkatkan performa dan stabilitas sistem enterprise.</p>
+          <div class="tags">
+            <span class="tag">Linux</span>
+            <span class="tag">Baremetal</span>
+            <span class="tag">Grafana</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIGERGRAPH AML WORKFLOW CARD -->
+      <div class="project-card reveal" data-tilt="true" data-tilt-max="10">
+        <div class="project-preview" style="background: radial-gradient(circle, rgba(249, 115, 22, 0.15) 0%, rgba(15, 23, 42, 0.9) 70%);">
+          <svg width="70" height="70" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 0 14px rgba(249, 115, 22, 0.6)); position: relative; z-index: 2;">
+            <path d="M50 5L10 25V75L50 95L90 75V25L50 5Z" stroke="#F97316" stroke-width="6" stroke-linejoin="round" fill="rgba(249, 115, 22, 0.1)" />
+            <circle cx="50" cy="50" r="14" fill="#F97316" />
+            <circle cx="50" cy="22" r="7" fill="#38BDF8" />
+            <circle cx="74" cy="36" r="7" fill="#38BDF8" />
+            <circle cx="74" cy="64" r="7" fill="#38BDF8" />
+            <circle cx="50" cy="78" r="7" fill="#38BDF8" />
+            <circle cx="26" cy="64" r="7" fill="#38BDF8" />
+            <circle cx="26" cy="36" r="7" fill="#38BDF8" />
+            <line x1="50" y1="36" x2="50" y2="29" stroke="#F97316" stroke-width="4" />
+            <line x1="62" y1="43" x2="68" y2="39" stroke="#F97316" stroke-width="4" />
+            <line x1="62" y1="57" x2="68" y2="61" stroke="#F97316" stroke-width="4" />
+            <line x1="50" y1="64" x2="50" y2="71" stroke="#F97316" stroke-width="4" />
+            <line x1="38" y1="57" x2="32" y2="61" stroke="#F97316" stroke-width="4" />
+            <line x1="38" y1="43" x2="32" y2="39" stroke="#F97316" stroke-width="4" />
+          </svg>
+        </div>
+        <div class="project-info">
+          <h3>TigerGraph AML Workflow</h3>
+          <p>Mengelola pipeline data AML (Anti-Money Laundering) menggunakan platform TigerGraph untuk mendeteksi anomali data.</p>
+          <div class="tags">
+            <span class="tag">TigerGraph</span>
+            <span class="tag">Big Data</span>
+            <span class="tag">ETL</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card reveal" data-tilt="true" data-tilt-max="10">
+        <div class="project-preview">⚙️</div>
+        <div class="project-info">
+          <h3>Oracle DB & API Integration</h3>
+          <p>Optimasi query database Oracle, administrasi database, dan pengujian API sesuai standar SDLC.</p>
+          <div class="tags">
+            <span class="tag">Oracle DB</span>
+            <span class="tag">API</span>
+            <span class="tag">SDLC</span>
+          </div>
+        </div>
+      </div>
+
     </div>
+  </section>
 
-    <footer>
-        <p>&copy; 2026 Dani Indra Kusuma. All Rights Reserved. | Hosted with Pride</p>
-    </footer>
+  <!-- CONTACT SECTION -->
+  <section class="container" id="contact">
+    <h2 class="section-title reveal">Mari Bekerja Sama</h2>
+    <div class="contact-card reveal" data-tilt="true" data-tilt-max="5">
+      <p style="margin-bottom: 2rem; color: var(--text-sub);">Tertarik untuk berdiskusi seputar Data Operations, Graph Database, atau kebutuhan aplikasi enterprise? Mari terhubung!</p>
+      
+      <div class="btn-group">
+        <!-- LANGSUNG MASUK KE GMAIL WEB DI TAB BARU -->
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=kusdani98@gmail.com&su=Inquiry%20Portofolio%20-%20Diskusi%20Kerja%20Sama&body=Halo%20Dani,%0A%0ASaya%20tertarik%20dengan%20profil%20dan%20portofolio%20kamu.%20Mari%20berdiskusi%20lebih%20lanjut." 
+           target="_blank" 
+           rel="noopener noreferrer"
+           class="btn btn-primary">
+          ✉️ Kirim Email
+        </a>
+        
+        <a href="https://wa.me/6281317692964?text=Halo%20Dani,%20saya%20tertarik%20untuk%20berdiskusi%20dan%20bekerja%20sama!" 
+           target="_blank" 
+           class="btn btn-whatsapp">
+          💬 Hubungi via WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
 
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2026 Dani Indra Kusuma. Dibuat dengan HTML, CSS & JavaScript.</p>
+  </footer>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // 1. ANIMASI PARTIKEL CANVAS INTERAKTIF & REAKSI MOUSE
+    const canvas = document.getElementById('particles-canvas');
+    const ctx = canvas.getContext('2d');
+    let particlesArray = [];
+
+    const mouse = {
+      x: null,
+      y: null,
+      radius: 150
+    };
+
+    window.addEventListener('mousemove', (event) => {
+      mouse.x = event.x;
+      mouse.y = event.y;
+    });
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 1;
+        this.speedX = Math.random() * 1 - 0.5;
+        this.speedY = Math.random() * 1 - 0.5;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.x > canvas.width) this.x = 0;
+        if (this.x < 0) this.x = canvas.width;
+        if (this.y > canvas.height) this.y = 0;
+        if (this.y < 0) this.y = canvas.height;
+      }
+      draw() {
+        ctx.fillStyle = 'rgba(56, 189, 248, 0.4)';
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function initParticles() {
+      particlesArray = [];
+      const particleCount = Math.floor((canvas.width * canvas.height) / 14000);
+      for (let i = 0; i < particleCount; i++) {
+        particlesArray.push(new Particle());
+      }
+    }
+    initParticles();
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < particlesArray.length; i++) {
+        particlesArray[i].update();
+        particlesArray[i].draw();
+
+        for (let j = i; j < particlesArray.length; j++) {
+          const dx = particlesArray[i].x - particlesArray[j].x;
+          const dy = particlesArray[i].y - particlesArray[j].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < 100) {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(56, 189, 248, ${0.12 - distance / 1000})`;
+            ctx.lineWidth = 0.5;
+            ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
+            ctx.lineTo(particlesArray[j].x, particlesArray[j].y);
+            ctx.stroke();
+          }
+        }
+
+        if (mouse.x && mouse.y) {
+          const mDx = particlesArray[i].x - mouse.x;
+          const mDy = particlesArray[i].y - mouse.y;
+          const mDistance = Math.sqrt(mDx * mDx + mDy * mDy);
+          if (mDistance < mouse.radius) {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(168, 85, 247, ${0.25 - mDistance / mouse.radius})`;
+            ctx.lineWidth = 0.8;
+            ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
+            ctx.lineTo(mouse.x, mouse.y);
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    // 2. TOGGLE DARK / LIGHT MODE
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    const themeText = document.getElementById('theme-text');
+    const body = document.body;
+
+    function toggleTheme() {
+      const currentTheme = body.getAttribute('data-theme');
+      if (currentTheme === 'light') {
+        body.removeAttribute('data-theme');
+        themeIcon.innerText = '🌙';
+        themeText.innerText = 'Dark';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        body.setAttribute('data-theme', 'light');
+        themeIcon.innerText = '☀️';
+        themeText.innerText = 'Light';
+        localStorage.setItem('theme', 'light');
+      }
+    }
+
+    if (localStorage.getItem('theme') === 'light') {
+      body.setAttribute('data-theme', 'light');
+      themeIcon.innerText = '☀️';
+      themeText.innerText = 'Light';
+    }
+
+    themeToggle.addEventListener('click', toggleTheme);
+
+    // 3. TYPING EFFECT HERO
+    window.addEventListener('DOMContentLoaded', () => {
+      new Typed('#typing-hero', {
+        strings: [
+          'Application Engineer',
+          'Data Operations Specialist',
+          'L1 Technical Support Engineer'
+        ],
+        typeSpeed: 50,
+        backSpeed: 30,
+        backDelay: 2000,
+        loop: true
+      });
+    });
+
+    // 4. REVEAL ANIMATION ON SCROLL
+    const reveals = document.querySelectorAll('.reveal');
+    function revealOnScroll() {
+      const windowHeight = window.innerHeight;
+      reveals.forEach(reveal => {
+        const elementTop = reveal.getBoundingClientRect().top;
+        const elementVisible = 120;
+        if (elementTop < windowHeight - elementVisible) {
+          reveal.classList.add('active');
+        }
+      });
+    }
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll();
+
+    // 5. STATS ANIMATED COUNTER ON SCROLL
+    const statNumbers = document.querySelectorAll('.stat-number');
+    let animated = false;
+
+    window.addEventListener('scroll', () => {
+      const statsSection = document.querySelector('.stats-container');
+      if (!statsSection) return;
+      
+      const position = statsSection.getBoundingClientRect().top;
+      const screenPosition = window.innerHeight / 1.2;
+
+      if (position < screenPosition && !animated) {
+        statNumbers.forEach(counter => {
+          const target = +counter.getAttribute('data-target');
+          let count = 0;
+          const speed = target / 30;
+
+          const updateCount = () => {
+            count += speed;
+            if (count < target) {
+              counter.innerText = Math.ceil(count);
+              setTimeout(updateCount, 40);
+            } else {
+              counter.innerText = target + (target === 99 ? '%' : '+');
+            }
+          };
+          updateCount();
+        });
+        animated = true;
+      }
+    });
+  </script>
 </body>
 </html>
